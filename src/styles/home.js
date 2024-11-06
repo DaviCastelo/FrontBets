@@ -21,12 +21,12 @@ export const ContainerPrincipal = styled.div`
     min-height: 90vh;
     gap: 3rem;
     padding: 0 0 2rem 0;
-    background-color: #fff;
+    background-color: #353535FF;
 `;
 
 
 export const SpanPrincipal = styled.span`
-    color: #006B2D;
+    color: #FFFFFFFF;
     width: 70%;
     font-size: 2.5rem;
     font-weight: 700;
