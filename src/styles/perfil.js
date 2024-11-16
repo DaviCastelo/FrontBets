@@ -6,7 +6,7 @@ export const Main = styled.main`
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat; 
-  height: 90vh;
+  height: 100vh;
   display: flex;
   justify-content: center;
   align-items: center;

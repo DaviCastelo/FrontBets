@@ -12,46 +12,41 @@ export const HeaderContainer = styled.header`
   @media screen and (max-width: 850px) {
     position: absolute;
   }
-  `;
+`;
 
 export const HeaderBox = styled.div`
   width: 100%;
-  display: flex; 
-  justify-content: flex-start;
+  display: flex;
+  justify-content: space-between;
   align-items: center;
 `;
 
 export const Menu = styled.nav`
   display: flex;
-  align-items: center;
-  justify-content: flex-start;
-
-@media screen and (max-width: 850px) {
-  width: 100%;
-  padding: 0;
   justify-content: space-between;
-}
+  align-items: center;
+  width: 100%;
 `;
 
-export const Logo = styled.image`
+export const Logo = styled.img`
   width: 10rem;
-  height: 100%;
+  height: auto;
 `;
 
 export const MenuItem = styled.div`
-  font-size: .85rem;
+  font-size: 1.5rem;
   font-weight: 700;
-  padding: .5rem 3.5rem;
+  padding: 0.5rem 0rem 0.5rem 3.5rem;
   color: #1e2952 !important;
   text-decoration: none;
+  
   @media screen and (max-width: 850px) {
     font-size: 1.4rem;
     font-weight: 700;
-    
   }
 
   @media screen and (max-width: 600px) {
-    padding: .2rem;
+    padding: 0.2rem;
   }
 `;
 
@@ -61,14 +56,65 @@ export const StyledLink = styled.span`
   letter-spacing: 0rem;
   border-bottom: none;
 
-  &:hover{
-    border-bottom: 2px solid #81151f;
+  &:hover {
+    border-bottom: 2px solid #006b2d;
   }
 `;
+
 export const MenuItems = styled.div`
   display: flex;
   justify-content: flex-start;
-  width: 100%;
   align-items: center;
+`;
 
+export const ProfileButton = styled.div`
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  color: white;
+  font-size: 1rem;
+  font-weight: 600;
+  margin-left: 2rem;
+
+  &:hover {
+    color: #006b2d;
+  }
+
+  svg {
+    font-size: 1.5rem;
+    margin-left: 0.5rem;
+  }
+`;
+
+export const SearchBox = styled.div`
+  display: flex;
+  align-items: center;
+  position: absolute;
+  top: 1.5vh;
+  background-color: white;
+  border-radius: 4px;
+  padding: 0.5rem;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+  z-index: 101;
+
+  input {
+    border: none;
+    outline: none;
+    padding: 0.5rem;
+    font-size: 1rem;
+    width: 180px;  /* Largura do input ajustada */
+    border-radius: 4px;
+    padding-left: 2rem;  /* Espaçamento à esquerda para a lupa */
+  }
+
+  input::placeholder {
+    color: #aaa;
+  }
+
+  svg {
+    position: absolute;
+    left: 10px;  /* Coloca a lupa mais à esquerda dentro do campo */
+    cursor: pointer;
+    color: #aaa;
+  }
 `;

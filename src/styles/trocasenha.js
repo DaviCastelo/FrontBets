@@ -88,7 +88,7 @@ export const ButtonContainer = styled.div`
 `;
 
 export const SaveButton = styled.button`
-  background-color: #28a745;
+  background-color: #006b2d;
   color: white;
   padding: 10px 15px;
   border: none;
