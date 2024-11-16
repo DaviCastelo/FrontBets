@@ -24,7 +24,7 @@ export const ContainerPrincipal = styled.div`
 `;
 
 export const SpanPrincipal = styled.span`
-  color: #006b2d;
+  color: #FFFFFFFF;
   font-size: 2rem;
   font-weight: 700;
   text-align: center;
