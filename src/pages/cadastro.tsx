@@ -3,6 +3,7 @@ import Head from 'next/head';
 import * as S from '../styles/cadastroStyles';
 import NavBar from '@/components/Navbar';
 import axios from 'axios';
+import router from 'next/router';
 
 const Cadastro = () => {
   const [nomeCompleto, setNomeCompleto] = useState('');
@@ -19,6 +20,11 @@ const Cadastro = () => {
     } catch (error) {
       console.error('Erro no cadastro:', error);
     }
+  };
+
+
+  const goToLogin = () => {
+    router.push('/login');
   };
 
   return (
@@ -83,6 +89,9 @@ const Cadastro = () => {
             </S.FormField>
             <S.SubmitButton type="submit">Cadastrar</S.SubmitButton>
           </S.FormContainer>
+          <S.BotaoCadastro onClick={goToLogin} style={{ marginTop: '1rem' }}>
+            Fazer Login
+          </S.BotaoCadastro>
         </S.ContainerPrincipal>
       </S.Main>
     </>

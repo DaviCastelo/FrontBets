@@ -2,31 +2,28 @@ import React, { useState } from 'react';
 import Head from 'next/head';
 import * as S from '../styles/perfil';
 import NavBar from '@/components/Navbar';
-import { useRouter } from 'next/router'; // Importe o useRouter
+import { useRouter } from 'next/router';
 
 const Perfil = () => {
-  const [login, setLogin] = useState('karyna@shosp.com.br');
-  const [nome, setNome] = useState('GISELE');
-  const [dataNascimento, setDataNascimento] = useState('2019-09-04');
-  const [telefone, setTelefone] = useState('(21) 3215-8788');
-  const [celular, setCelular] = useState('(21) 98664-8888');
-  const [cargo, setCargo] = useState('Informante');
+  const [login, setLogin] = useState('');
+  const [nome, setNome] = useState('');
+  const [dataNascimento, setDataNascimento] = useState('');
+  const [telefone, setTelefone] = useState('');
+  const [celular, setCelular] = useState('');
+  const [cargo, setCargo] = useState('');
   const [profileImage, setProfileImage] = useState<string | null>(null);
   
-  const router = useRouter(); // Utilize o useRouter para navegação
+  const router = useRouter(); 
 
-  // Função para salvar o perfil (não implementada, mas é onde você poderia salvar os dados)
   const handleSave = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     console.log('Perfil salvo com sucesso');
   };
 
-  // Função para navegar para a página de troca de senha
   const handlePasswordChange = () => {
-    router.push('/trocaSenha'); // Redireciona para a página de troca de senha
+    router.push('/trocaSenha');
   };
 
-  // Função para alterar a imagem do perfil
   const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files ? e.target.files[0] : null;
     if (file) {
@@ -49,7 +46,6 @@ const Perfil = () => {
         <S.ContainerPrincipal>
           <S.Title>Meu Perfil</S.Title>
           
-          {/* Imagem de perfil */}
           <S.ProfileImageContainer>
             <label htmlFor="profile-image-upload">
               <S.ProfileImage
@@ -62,11 +58,10 @@ const Perfil = () => {
               id="profile-image-upload"
               accept="image/*"
               onChange={handleImageChange}
-              style={{ display: 'none' }} // Esconde o input de file
+              style={{ display: 'none' }}
             />
           </S.ProfileImageContainer>
           
-          {/* Formulário de dados do perfil */}
           <S.FormContainer onSubmit={handleSave}>
             <S.FormField>
               <label htmlFor="login">Login*</label>
@@ -127,13 +122,10 @@ const Perfil = () => {
               </select>
             </S.FormField>
             
-            {/* Contêiner de botões */}
             <S.ButtonContainer>
-              {/* Botão para alterar a senha */}
               <S.PasswordButton type="button" onClick={handlePasswordChange}>
                 Alterar senha
               </S.PasswordButton>
-              {/* Botão para salvar os dados */}
               <S.SaveButton type="submit">Salvar</S.SaveButton>
             </S.ButtonContainer>
           </S.FormContainer>

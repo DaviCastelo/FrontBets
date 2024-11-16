@@ -44,8 +44,8 @@ const Home = () => {
         <S.ContainerPrincipal>
           <S.SpanPrincipal>Login</S.SpanPrincipal>
           <S.FormContainer onSubmit={handleLogin}>
-            <div>
-              <label htmlFor="email">E-mail:</label>
+            <div style={{width:'100%', display: 'flex', justifyContent: 'space-between',  alignItems: 'center'}}>
+              <label htmlFor="email">E-mail</label>
               <input
                 type="email"
                 id="email"
@@ -55,8 +55,8 @@ const Home = () => {
                 placeholder="Digite seu e-mail"
               />
             </div>
-            <div>
-              <label htmlFor="password">Senha:</label>
+            <div style={{width:'100%', display: 'flex', justifyContent: 'space-between',  alignItems: 'center'}}>
+              <label htmlFor="password">Senha</label>
               <input
                 type="password"
                 id="password"
@@ -66,11 +66,11 @@ const Home = () => {
                 placeholder="Digite sua senha"
               />
             </div>
-            <button type="submit">Entrar</button>
+            <S.SubmitButton type="submit">Entrar</S.SubmitButton>
           </S.FormContainer>
-          <button onClick={goToCadastro} style={{ marginTop: '1rem' }}>
+          <S.BotaoCadastro onClick={goToCadastro} style={{ marginTop: '1rem' }}>
             Fazer Cadastro
-          </button>
+          </S.BotaoCadastro>
         </S.ContainerPrincipal>
       </S.Main>
     </>
