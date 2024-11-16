@@ -1,19 +1,19 @@
 import * as S from "./styles";
 import Link from "next/link";
 import logo from "../../../public/logo.png";
-import { FaUserCircle, FaSearch } from "react-icons/fa"; // Lupa importada
+import { FaUserCircle, FaSearch } from "react-icons/fa"; 
 import { useState } from "react";
 
 const NavBar: React.FC = () => {
-  const [searchVisible, setSearchVisible] = useState(false); // Estado para controlar a visibilidade do campo de pesquisa
-  const [searchQuery, setSearchQuery] = useState(""); // Estado para armazenar o que está sendo digitado
+  const [searchVisible, setSearchVisible] = useState(false); 
+  const [searchQuery, setSearchQuery] = useState(""); 
 
   const handleSearchClick = () => {
-    setSearchVisible(!searchVisible); // Alterna a visibilidade do campo de pesquisa
+    setSearchVisible(!searchVisible); 
   };
 
   const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setSearchQuery(e.target.value); // Atualiza a query de pesquisa
+    setSearchQuery(e.target.value); 
   };
 
   return (
@@ -43,7 +43,7 @@ const NavBar: React.FC = () => {
               {!searchVisible && (
                 <FaSearch
                   onClick={handleSearchClick}
-                  style={{ cursor: "pointer", color: "white" }} // Lupa para abrir o campo de pesquisa
+                  style={{ cursor: "pointer", color: "white" }} 
                 />
               )}
             </S.MenuItem>

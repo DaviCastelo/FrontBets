@@ -102,9 +102,9 @@ export const SearchBox = styled.div`
     outline: none;
     padding: 0.5rem;
     font-size: 1rem;
-    width: 180px;  /* Largura do input ajustada */
+    width: 180px;  
     border-radius: 4px;
-    padding-left: 2rem;  /* Espaçamento à esquerda para a lupa */
+    padding-left: 2rem;  
   }
 
   input::placeholder {
@@ -113,7 +113,7 @@ export const SearchBox = styled.div`
 
   svg {
     position: absolute;
-    left: 10px;  /* Coloca a lupa mais à esquerda dentro do campo */
+    left: 10px;  
     cursor: pointer;
     color: #aaa;
   }
