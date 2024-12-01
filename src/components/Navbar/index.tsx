@@ -1,12 +1,16 @@
 import * as S from "./styles";
 import Link from "next/link";
 import logo from "../../../public/logo.png";
-import { FaUserCircle, FaSearch } from "react-icons/fa"; 
+import { FaUserCircle, FaSearch, FaSignOutAlt } from "react-icons/fa"; 
 import { useState } from "react";
+import { useRouter } from "next/router";
+import api from "@/services/api";
+import RefreshButton from "../RefreshButton";
 
 const NavBar: React.FC = () => {
   const [searchVisible, setSearchVisible] = useState(false); 
   const [searchQuery, setSearchQuery] = useState(""); 
+  const router = useRouter();
 
   const handleSearchClick = () => {
     setSearchVisible(!searchVisible); 
@@ -14,6 +18,15 @@ const NavBar: React.FC = () => {
 
   const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSearchQuery(e.target.value); 
+  };
+
+  const handleLogout = async () => {
+    try {
+      await api.post("/logout"); 
+      router.push("/login"); 
+    } catch (error) {
+      console.error("Erro ao fazer logout", error);
+    }
   };
 
   return (
@@ -26,8 +39,6 @@ const NavBar: React.FC = () => {
                 <img alt="Logo" src={logo.src} width={54} height={54} />
               </Link>
             </S.MenuItem>
-
-            {/* Campo de pesquisa com lupa dentro */}
             <S.MenuItem>
               {searchVisible && (
                 <S.SearchBox>
@@ -37,7 +48,7 @@ const NavBar: React.FC = () => {
                     value={searchQuery}
                     onChange={handleSearchChange}
                   />
-                  <FaSearch onClick={handleSearchClick} style={{ cursor: "pointer", color: "#aaa" }} /> {/* Lupa dentro do input */}
+                  <FaSearch onClick={handleSearchClick} style={{ cursor: "pointer", color: "#aaa" }} />
                 </S.SearchBox>
               )}
               {!searchVisible && (
@@ -48,15 +59,22 @@ const NavBar: React.FC = () => {
               )}
             </S.MenuItem>
           </S.MenuItems>
-
-          <S.MenuItem>
-            <Link href="/perfil">
-              <S.ProfileButton>
-                Perfil
-                <FaUserCircle />
-              </S.ProfileButton>
-            </Link>
-          </S.MenuItem>
+          <S.MenuItems>
+            <S.MenuItem>
+              <Link href="/perfil" style={{ textDecoration: "none" }}>
+                <S.ProfileButton>
+                  Perfil
+                  <FaUserCircle />
+                </S.ProfileButton>
+              </Link>
+            </S.MenuItem>
+            <S.MenuItem>
+              <FaSignOutAlt
+                onClick={handleLogout} 
+                style={{ cursor: "pointer", color: "white", marginRight: "2rem", padding: 0 }} 
+              />
+            </S.MenuItem>
+          </S.MenuItems>
         </S.Menu>
       </S.HeaderBox>
     </S.HeaderContainer>

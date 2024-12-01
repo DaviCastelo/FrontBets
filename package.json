@@ -10,12 +10,16 @@
   },
   "proxy": "http://localhost:5000",
   "dependencies": {
+    "@emotion/react": "^11.13.5",
+    "@emotion/styled": "^11.13.5",
+    "@mui/material": "^6.1.9",
     "@types/node": "18.15.11",
     "@types/react": "18.0.33",
     "@types/react-dom": "18.0.11",
     "axios": "^1.7.7",
     "bet-web": "file:",
     "consultar-cnpj": "^1.0.19",
+    "country-list": "^2.3.0",
     "js-cookie": "^3.0.1",
     "jsdom": "^21.1.1",
     "jsonwebtoken": "^9.0.0",
@@ -26,15 +30,18 @@
     "react-dom": "18.2.0",
     "react-icons": "^5.3.0",
     "react-slick": "^0.30.2",
+    "react-world-flags": "^1.6.0",
     "slick-carousel": "^1.8.1",
     "styled-components": "^5.3.9",
     "typescript": "5.0.3"
   },
   "devDependencies": {
+    "@types/country-list": "^2.1.4",
     "@types/js-cookie": "^3.0.3",
     "@types/jsdom": "^21.1.1",
     "@types/jsonwebtoken": "^9.0.1",
     "@types/react-slick": "^0.23.13",
+    "@types/react-world-flags": "^1.6.0",
     "@types/styled-components": "^5.1.26",
     "next": "13.2.4"
   }

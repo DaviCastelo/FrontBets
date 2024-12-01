@@ -2,10 +2,10 @@ import styled from "styled-components";
 
 export const HeaderContainer = styled.header`
   width: 100%;
-  height: 10vh;
+  height: 7vh;
   display: flex;
   justify-content: center;
-  background-color: #000;
+  background-color: #292929;
   top: 0;
   z-index: 100;
 
@@ -36,9 +36,11 @@ export const Logo = styled.img`
 export const MenuItem = styled.div`
   font-size: 1.5rem;
   font-weight: 700;
-  padding: 0.5rem 0rem 0.5rem 3.5rem;
+  padding: 0.5rem 0rem 0.5rem 1.5rem;
   color: #1e2952 !important;
   text-decoration: none;
+  display: flex;
+  
   
   @media screen and (max-width: 850px) {
     font-size: 1.4rem;
@@ -74,11 +76,7 @@ export const ProfileButton = styled.div`
   color: white;
   font-size: 1rem;
   font-weight: 600;
-  margin-left: 2rem;
-
-  &:hover {
-    color: #006b2d;
-  }
+  text-decoration: none;
 
   svg {
     font-size: 1.5rem;
@@ -90,8 +88,8 @@ export const SearchBox = styled.div`
   display: flex;
   align-items: center;
   position: absolute;
-  top: 1.5vh;
-  background-color: white;
+  top: 1vh;
+  background-color: #555555;
   border-radius: 4px;
   padding: 0.5rem;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
@@ -100,11 +98,13 @@ export const SearchBox = styled.div`
   input {
     border: none;
     outline: none;
-    padding: 0.5rem;
-    font-size: 1rem;
+    padding: 0.3rem;
+    font-size: .7rem;
     width: 180px;  
     border-radius: 4px;
     padding-left: 2rem;  
+    background-color: #555555;
+    color: white;
   }
 
   input::placeholder {
@@ -114,6 +114,7 @@ export const SearchBox = styled.div`
   svg {
     position: absolute;
     left: 10px;  
+    font-size: 1.1rem;
     cursor: pointer;
     color: #aaa;
   }

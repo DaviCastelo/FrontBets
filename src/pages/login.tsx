@@ -2,21 +2,30 @@ import React, { useState } from 'react';
 import Head from 'next/head';
 import * as S from '../styles/login';
 import NavBar from '@/components/Navbar';
-import axios from 'axios';
+import api from '@/services/api'; 
 import { useRouter } from 'next/router';
 
-const Home = () => {
+const Login = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [mensagem, setMensagem] = useState('');
   const router = useRouter();
 
   const handleLogin = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
     try {
-      const response = await axios.post('/api/login', { email, password });
+      const response = await api.post('/login', { email, password });
+      setMensagem('Login realizado com sucesso!');
       console.log('Login bem-sucedido:', response.data);
-    } catch (error) {
+
+      localStorage.setItem('token', response.data.token);
+
+      router.push('/');
+    } catch (error: any) {
+      setMensagem(
+        error.response?.data?.message || 'Erro no login. Verifique suas credenciais.'
+      );
       console.error('Erro no login:', error);
     }
   };
@@ -77,4 +86,4 @@ const Home = () => {
   );
 };
 
-export default Home;
+export default Login;
