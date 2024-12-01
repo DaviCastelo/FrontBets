@@ -290,8 +290,9 @@ __webpack_require__.a(module, async (__webpack_handle_async_dependencies__, __we
 var __webpack_async_dependencies__ = __webpack_handle_async_dependencies__([axios__WEBPACK_IMPORTED_MODULE_0__]);
 axios__WEBPACK_IMPORTED_MODULE_0__ = (__webpack_async_dependencies__.then ? (await __webpack_async_dependencies__)() : __webpack_async_dependencies__)[0];
 
+const apiUrl = process.env.REACT_APP_API_URL;
 const api = axios__WEBPACK_IMPORTED_MODULE_0__["default"].create({
-    baseURL: "http://127.0.0.1:8000/api",
+    baseURL: apiUrl,
     headers: {
         "Content-Type": "application/json",
         Accept: "application/json"
