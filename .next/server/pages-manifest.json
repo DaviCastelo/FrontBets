@@ -1,6 +1,12 @@
 {
   "/_app": "pages/_app.js",
-  "/_error": "pages/_error.js",
   "/_document": "pages/_document.js",
-  "/": "pages/index.js"
+  "/api/hello": "pages/api/hello.js",
+  "/cadastro": "pages/cadastro.html",
+  "/": "pages/index.html",
+  "/login": "pages/login.html",
+  "/perfil": "pages/perfil.html",
+  "/trocaSenha": "pages/trocaSenha.html",
+  "/_error": "pages/_error.js",
+  "/404": "pages/404.html"
 }
