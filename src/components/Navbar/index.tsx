@@ -1,7 +1,7 @@
 import * as S from "./styles";
 import Link from "next/link";
 import logo from "../../../public/logo.png";
-import { FaUserCircle, FaSearch, FaSignOutAlt } from "react-icons/fa"; 
+import { FaUserCircle, FaSearch, FaSignOutAlt, FaStar } from "react-icons/fa"; 
 import { useState } from "react";
 import { useRouter } from "next/router";
 import api from "@/services/api";
@@ -60,6 +60,11 @@ const NavBar: React.FC = () => {
             </S.MenuItem>
           </S.MenuItems>
           <S.MenuItems>
+            <S.MenuItem>
+              <Link href="/favoritos" style={{ textDecoration: "none" }}>
+                <FaStar style={{ cursor: "pointer", color: "white", fontSize: "1.5rem" }} />
+              </Link>
+            </S.MenuItem>
             <S.MenuItem>
               <Link href="/perfil" style={{ textDecoration: "none" }}>
                 <S.ProfileButton>

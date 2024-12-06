@@ -12,7 +12,7 @@
   "dependencies": {
     "@emotion/react": "^11.13.5",
     "@emotion/styled": "^11.13.5",
-    "@mui/material": "^6.1.9",
+    "@mui/material": "^6.1.10",
     "@types/node": "18.15.11",
     "@types/react": "18.0.33",
     "@types/react-dom": "18.0.11",
@@ -32,7 +32,7 @@
     "react-slick": "^0.30.2",
     "react-world-flags": "^1.6.0",
     "slick-carousel": "^1.8.1",
-    "styled-components": "^5.3.9",
+    "styled-components": "^5.3.11",
     "typescript": "5.0.3"
   },
   "devDependencies": {

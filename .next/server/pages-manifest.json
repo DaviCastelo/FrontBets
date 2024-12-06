@@ -1,12 +1,7 @@
 {
   "/_app": "pages/_app.js",
-  "/_document": "pages/_document.js",
-  "/api/hello": "pages/api/hello.js",
-  "/cadastro": "pages/cadastro.html",
-  "/": "pages/index.html",
-  "/perfil": "pages/perfil.html",
-  "/login": "pages/login.html",
-  "/trocaSenha": "pages/trocaSenha.html",
   "/_error": "pages/_error.js",
-  "/404": "pages/404.html"
+  "/_document": "pages/_document.js",
+  "/": "pages/index.js",
+  "/times": "pages/times.js"
 }
