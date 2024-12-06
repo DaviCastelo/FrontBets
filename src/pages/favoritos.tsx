@@ -1,5 +1,5 @@
 import React from 'react';
-import * as S from '../styles/favoritos'; // Importa os estilos
+import * as S from '../styles/favoritos'; 
 import NavBar from '@/components/Navbar';
 
 const Favoritos: React.FC = () => {

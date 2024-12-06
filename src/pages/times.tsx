@@ -5,37 +5,29 @@ import { useRouter } from "next/router";
 import { TimeApiService } from "@/api/time";
 import { PartidaApiService } from "@/api/partida";
 
-
 const TimesPage = () => {
   const router = useRouter();
-  const { id, nome } = router.query; // Captura os query params da URL
-  const [activeTab, setActiveTab] = useState<string>("Resumo"); // Aba ativa
-  const [teamDetails, setTeamDetails] = useState<any>(null); // Detalhes do time
-  const [matches, setMatches] = useState<any[]>([]); // Partidas do time
-  const [error, setError] = useState<string | null>(null); // Erros da API
+  const { id, nome } = router.query;
+  const [activeTab, setActiveTab] = useState<string>("Resumo");
+  const [teamDetails, setTeamDetails] = useState<any>(null);
+  const [matches, setMatches] = useState<any[]>([]);
+  const [error, setError] = useState<string | null>(null);
 
-  // Obtém os detalhes do time e suas partidas
   useEffect(() => {
     if (id) {
-      // Obtém detalhes do time
       TimeApiService.getTeam(Number(id))
         .then((response) => {
-          console.log("Detalhes do time:", response.data); // Debug
           setTeamDetails(response.data);
         })
         .catch((err) => {
-          console.error("Erro ao carregar detalhes do time:", err);
           setError("Erro ao carregar detalhes do time");
         });
 
-      // Obtém partidas do time
       PartidaApiService.getTeamMatches(String(id), "todas")
         .then((response) => {
-          console.log("Partidas do time:", response.data); // Debug
           setMatches(response.data.partidas);
         })
         .catch((err) => {
-          console.error("Erro ao carregar partidas do time:", err);
           setError("Erro ao carregar as partidas do time");
         });
     }
@@ -134,10 +126,7 @@ const TimesPage = () => {
 
   return (
     <S.Container>
-      {/* Navbar */}
       <NavBar />
-
-      {/* Header */}
       <S.Header>
         <S.HeaderContent>
           <div>
@@ -150,8 +139,6 @@ const TimesPage = () => {
           </div>
         </S.HeaderContent>
       </S.Header>
-
-      {/* Navigation Tabs */}
       <S.Nav>
         <S.Button
           className={`py-2 px-4 ${activeTab === "Resumo" ? "border-b-2 border-yellow-500" : ""}`}
@@ -190,8 +177,6 @@ const TimesPage = () => {
           Elenco
         </S.InactiveButton>
       </S.Nav>
-
-      {/* Content Section */}
       {error ? (
         <p className="text-red-500">{error}</p>
       ) : (
