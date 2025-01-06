@@ -22,7 +22,7 @@ const RefreshButton: React.FC = () => {
       <button onClick={handleRefresh} disabled={loading}>
         {loading ? 'Carregando...' : 'Atualizar Partidas'}
       </button>
-      {message && <p>{message}</p>}
+      {message && <p style={{ color: 'white' }}>{message}</p>}
     </div>
   );
 };

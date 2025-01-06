@@ -7,7 +7,7 @@ import { PartidaApiService } from "@/api/partida";
 import { IPartida } from "@/common/interfaces/partida";
 import CircularProgress from "@mui/material/CircularProgress";
 
-const CampeonatoInfo: React.FC<ILiga> = ({ nome, id, logo }) => {
+const CampeonatoInfo = ({ nome, id, logo, onSelectTime }: { nome: string; id: number; logo: string; onSelectTime: (id: number) => void }) => {
   const [times, setTimes] = useState<ITime[]>([]);
   const [fixtures, setFixtures] = useState<IPartida[]>([]);
   const [results, setResults] = useState<IPartida[]>([]);
@@ -104,7 +104,7 @@ const CampeonatoInfo: React.FC<ILiga> = ({ nome, id, logo }) => {
       {!loading && !error && selectedOption === "Times" && times.length > 0 && (
         <S.ListaTimes>
           {times.map((time) => (
-            <S.Time key={time.id}>
+            <S.Time key={time.id} onClick={() => onSelectTime(time.id)}>
               <img src={time.escudo} alt={time.nome} />
               {time.nome}
             </S.Time>

@@ -319,10 +319,10 @@
   resolved "https://registry.npmjs.org/@next/env/-/env-13.2.4.tgz"
   integrity sha512-+Mq3TtpkeeKFZanPturjcXt+KHfKYnLlX6jMLyCrmpq6OOs4i1GqBOAauSkii9QeKCMTYzGppar21JU57b/GEA==
 
-"@next/swc-win32-x64-msvc@13.2.4":
+"@next/swc-darwin-arm64@13.2.4":
   version "13.2.4"
-  resolved "https://registry.npmjs.org/@next/swc-win32-x64-msvc/-/swc-win32-x64-msvc-13.2.4.tgz"
-  integrity sha512-0MffFmyv7tBLlji01qc0IaPP/LVExzvj7/R5x1Jph1bTAIj4Vu81yFQWHHQAP6r4ff9Ukj1mBK6MDNVXm7Tcvw==
+  resolved "https://registry.npmjs.org/@next/swc-darwin-arm64/-/swc-darwin-arm64-13.2.4.tgz"
+  integrity sha512-S6vBl+OrInP47TM3LlYx65betocKUUlTZDDKzTiRDbsRESeyIkBtZ6Qi5uT2zQs4imqllJznVjFd1bXLx3Aa6A==
 
 "@popperjs/core@^2.11.8":
   version "2.11.8"
@@ -546,7 +546,7 @@ babel-plugin-syntax-jsx@^6.18.0:
     react-slick "^0.30.2"
     react-world-flags "^1.6.0"
     slick-carousel "^1.8.1"
-    styled-components "^5.3.9"
+    styled-components "^5.3.11"
     typescript "5.0.3"
 
 boolbase@^1.0.0:

@@ -1,15 +1,48 @@
 import styled from 'styled-components';
 
 export const Container = styled.div`
-  background-color: #1a1a1a;
+  background-color: #353535FF;
+  width: 100%;
+  padding: 0 8%;
   color: #ffffff;
   min-height: 100vh;
   font-family: sans-serif;
 `;
 
+export const ContainerPrincipal = styled.div`
+    display: grid;
+    grid-template-columns: 18% 82%;
+    width: 100%;
+    min-height: 85vh;
+    padding-top: 5vh;
+    padding-bottom: 5vh;
+`;
+
+export const ContainerLigas = styled.div`
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: start;
+    width: 100%;
+    min-height: 100%;
+    gap: 2rem;
+    border-right: 1px solid #555555;
+`;
+
+export const ContainerSecundario = styled.div`
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: start;
+    width: 100%;
+    min-height: 100%;
+    gap: 2rem;
+`;
+
 export const Header = styled.header`
   background-color: #2d2d2d;
   padding: 1rem 1.5rem;
+  border-radius: 5px 5px 0 0;
 `;
 
 export const HeaderContent = styled.div`
@@ -23,6 +56,7 @@ export const Nav = styled.nav`
   display: flex;
   gap: 1rem;
   padding: 0.5rem 1.5rem;
+  border-radius: 0 0 5px 5px;
 `;
 
 export const Button = styled.button`

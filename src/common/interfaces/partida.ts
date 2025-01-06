@@ -9,4 +9,5 @@ export interface IPartida {
     placar_mandante: number | null;
     placar_visitante: number | null;
     campeonato: ILiga;
+    tipo?: string;
 }

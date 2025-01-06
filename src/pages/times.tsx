@@ -1,17 +1,28 @@
 import React, { useEffect, useState } from "react";
 import * as S from "../styles/times";
-import NavBar from "@/components/Navbar";
-import { useRouter } from "next/router";
 import { TimeApiService } from "@/api/time";
 import { PartidaApiService } from "@/api/partida";
+import { ITime } from "@/common/interfaces/time";
+import { IPartida } from "@/common/interfaces/partida";
+import { FaArrowLeft } from "react-icons/fa";
 
-const TimesPage = () => {
-  const router = useRouter();
-  const { id, nome } = router.query;
-  const [activeTab, setActiveTab] = useState<string>("Resumo");
-  const [teamDetails, setTeamDetails] = useState<any>(null);
-  const [matches, setMatches] = useState<any[]>([]);
+const Time = ({ id, onBack }: { id: number; onBack: () => void }) => {
+  const [activeTab, setActiveTab] = useState<string>("Resultados");
+  const [teamDetails, setTeamDetails] = useState<ITime>();
+  const [matches, setMatches] = useState<IPartida[]>([]);
   const [error, setError] = useState<string | null>(null);
+
+  function formatarData(data: string) {
+    const meses = [
+        "Janeiro", "Fevereiro", "Março", "Abril", "Maio", "Junho",
+        "Julho", "Agosto", "Setembro", "Outubro", "Novembro", "Dezembro"
+    ];
+
+    const [ano, mes, dia] = data.split("-"); 
+    const mesPorExtenso = meses[parseInt(mes, 10) - 1]; 
+
+    return `${dia} de ${mesPorExtenso}`; 
+  }
 
   useEffect(() => {
     if (id) {
@@ -26,6 +37,7 @@ const TimesPage = () => {
       PartidaApiService.getTeamMatches(String(id), "todas")
         .then((response) => {
           setMatches(response.data.partidas);
+          console.log(matches);
         })
         .catch((err) => {
           setError("Erro ao carregar as partidas do time");
@@ -43,7 +55,6 @@ const TimesPage = () => {
               <div>
                 <p className="text-white">Nome: {teamDetails.nome || "Não disponível"}</p>
                 <p className="text-white">Estádio: {teamDetails.estadio || "Não disponível"}</p>
-                <p className="text-white">Capacidade: {teamDetails.capacidade || "Não disponível"}</p>
               </div>
             ) : (
               <p className="text-white">Carregando informações do time ou dados não encontrados...</p>
@@ -54,13 +65,13 @@ const TimesPage = () => {
         return (
           <S.Section>
             <h2 className="text-lg font-bold mb-4">Resultados Recentes</h2>
-            {matches.length > 0 ? (
+            {matches ? (
               matches
-                .filter((match) => match.tipo === "finalizados")
+                .filter((match) => match.tipo === "results")
                 .map((match, index) => (
-                  <div key={index} className="bg-gray-800 p-4 rounded-md mb-2">
-                    <p className="text-white">
-                      {match.timeCasa} {match.placarCasa} - {match.placarVisitante} {match.timeVisitante}
+                  <div key={index} style={{width: "100%"}}>
+                    <p style={{color: "white"}}>
+                    {formatarData(match.data)} - {match.time_mandante.nome} {match.placar_mandante} - {match.placar_visitante} {match.time_visitante.nome}
                     </p>
                   </div>
                 ))
@@ -69,17 +80,17 @@ const TimesPage = () => {
             )}
           </S.Section>
         );
-      case "Calendário":
+      case "Próximos Jogos":
         return (
           <S.Section>
-            <h2 className="text-lg font-bold mb-4">Calendário de Jogos</h2>
+            <h2 className="text-lg font-bold mb-4">Próximos Jogos</h2>
             {matches.length > 0 ? (
               matches
-                .filter((match) => match.tipo === "agendados")
+                .filter((match) => match.tipo === "fixtures")
                 .map((match, index) => (
-                  <div key={index} className="bg-gray-800 p-4 rounded-md mb-2">
-                    <p className="text-white">
-                      {match.data} - {match.timeCasa} vs {match.timeVisitante}
+                  <div key={index} style={{width: "100%"}}>
+                    <p style={{color: "white"}}>
+                      {formatarData(match.data)} - {match.time_mandante.nome} vs {match.time_visitante.nome}
                     </p>
                   </div>
                 ))
@@ -126,26 +137,24 @@ const TimesPage = () => {
 
   return (
     <S.Container>
-      <NavBar />
       <S.Header>
         <S.HeaderContent>
           <div>
             {error ? (
               <h1 className="text-xl font-bold text-red-500">{error}</h1>
             ) : (
-              <h1 className="text-xl font-bold">{nome || teamDetails?.nome || "Erro: Nome do time não encontrado"}</h1>
+              <h1 className="text-xl font-bold">{teamDetails?.nome || "Erro: Nome do time não encontrado"}</h1>
             )}
-            <p className="text-sm">ID do Campeonato: {id}</p>
           </div>
         </S.HeaderContent>
       </S.Header>
       <S.Nav>
-        <S.Button
+        {/* <S.Button
           className={`py-2 px-4 ${activeTab === "Resumo" ? "border-b-2 border-yellow-500" : ""}`}
           onClick={() => setActiveTab("Resumo")}
         >
           Resumo
-        </S.Button>
+        </S.Button> */}
         <S.InactiveButton
           className={`py-2 px-4 ${activeTab === "Resultados" ? "border-b-2 border-yellow-500" : ""}`}
           onClick={() => setActiveTab("Resultados")}
@@ -153,10 +162,10 @@ const TimesPage = () => {
           Resultados
         </S.InactiveButton>
         <S.InactiveButton
-          className={`py-2 px-4 ${activeTab === "Calendário" ? "border-b-2 border-yellow-500" : ""}`}
-          onClick={() => setActiveTab("Calendário")}
+          className={`py-2 px-4 ${activeTab === "Próximos Jogos" ? "border-b-2 border-yellow-500" : ""}`}
+          onClick={() => setActiveTab("Próximos Jogos")}
         >
-          Calendário
+          Próximos Jogos
         </S.InactiveButton>
         <S.InactiveButton
           className={`py-2 px-4 ${activeTab === "Classificação" ? "border-b-2 border-yellow-500" : ""}`}
@@ -180,10 +189,14 @@ const TimesPage = () => {
       {error ? (
         <p className="text-red-500">{error}</p>
       ) : (
-        renderContent()
+        <>
+          <br/>
+          <FaArrowLeft style={{cursor: "pointer"}} onClick={onBack}/>
+          {renderContent()}
+        </>
       )}
     </S.Container>
   );
 };
 
-export default TimesPage;
+export default Time;

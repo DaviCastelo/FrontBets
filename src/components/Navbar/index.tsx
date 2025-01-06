@@ -61,6 +61,9 @@ const NavBar: React.FC = () => {
           </S.MenuItems>
           <S.MenuItems>
             <S.MenuItem>
+              <RefreshButton />
+            </S.MenuItem>
+            <S.MenuItem>
               <Link href="/favoritos" style={{ textDecoration: "none" }}>
                 <FaStar style={{ cursor: "pointer", color: "white", fontSize: "1.5rem" }} />
               </Link>
