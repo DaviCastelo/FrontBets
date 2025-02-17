@@ -1,26 +1,30 @@
-
 import { useEffect, useState } from "react";
 import { fetchLeagues } from "@/services/api";
-import { Trophy, Menu, X } from "lucide-react";
+import { Trophy, Menu, X, Search } from "lucide-react";
 import { ILiga } from "@/common/interfaces/liga";
 import Flag from "react-world-flags";
 import { getCode } from "country-list";
 import { Button } from "@/components/ui/button";
 import { useIsMobile } from "@/hooks/use-mobile";
+import { Input } from "@/components/ui/input";
+import axios from "axios";
+import { useNavigate } from "react-router-dom"; // Adicione useNavigate para redirecionamento
 
 interface LeagueSidebarProps {
   onSelectLeague: (league: ILiga) => void;
   selectedLeague?: ILiga;
 }
 
-export const LeagueSidebar = ({
-  onSelectLeague,
-  selectedLeague,
-}: LeagueSidebarProps) => {
+export const LeagueSidebar = ({ onSelectLeague, selectedLeague }: LeagueSidebarProps) => {
   const [leagues, setLeagues] = useState<ILiga[]>([]);
   const [loading, setLoading] = useState(true);
   const [isOpen, setIsOpen] = useState(true);
+  const [searchQuery, setSearchQuery] = useState("");
+  const [searchResults, setSearchResults] = useState<any[]>([]);
+  const [isSearching, setIsSearching] = useState(false); // Indicador de carregamento da busca
+  const [searchError, setSearchError] = useState<string | null>(null); // Mensagem de erro
   const isMobile = useIsMobile();
+  const navigate = useNavigate(); // Hook para redirecionamento
 
   useEffect(() => {
     setIsOpen(!isMobile);
@@ -51,6 +55,37 @@ export const LeagueSidebar = ({
       setIsOpen(false);
     }
   };
+
+  const handleSearch = async (query: string) => {
+    setSearchQuery(query);
+    if (query.length > 2) {
+      setIsSearching(true);
+      setSearchError(null);
+  
+      try {
+        const response = await axios.get("/api/times", {
+          params: { nome: query },
+        });
+  
+        if (Array.isArray(response.data)) {
+          setSearchResults(response.data);
+        } else {
+          setSearchResults([]);
+          setSearchError("Nenhum time encontrado.");
+        }
+      } catch (error) {
+        console.error("Erro ao buscar times:", error);
+        setSearchResults([]);
+        setSearchError("Erro ao buscar times. Tente novamente.");
+      } finally {
+        setIsSearching(false);
+      }
+    } else {
+      setSearchResults([]);
+    }
+  };
+  
+  
 
   if (loading) {
     return (
@@ -88,6 +123,40 @@ export const LeagueSidebar = ({
             <Trophy className="w-5 h-5 text-emerald-500" />
             Ligas
           </h2>
+
+          {/* Área de busca por nome do time */}
+          <div className="mb-4">
+            <div className="relative">
+              <Search className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
+              <Input
+                type="text"
+                placeholder="Buscar time..."
+                value={searchQuery}
+                onChange={(e) => handleSearch(e.target.value)}
+                className="pl-10"
+              />
+            </div>
+            {isSearching && <p className="text-sm text-muted-foreground mt-2">Buscando...</p>}
+            {searchError && <p className="text-sm text-red-500 mt-2">{searchError}</p>}
+            {searchResults.length > 0 && (
+              <div className="mt-2 border rounded-lg bg-background shadow-lg max-h-60 overflow-y-auto">
+                {searchResults.map((team: any) => (
+                  <button
+                    key={team.id}
+                    onClick={() => handleSelectLeague(team)}
+                    className="w-full text-left px-3 py-2 hover:bg-muted"
+                  >
+                    {team.nome}
+                  </button>
+                ))}
+              </div>
+            )}
+            {searchQuery.length > 2 && searchResults.length === 0 && !isSearching && (
+              <p className="text-sm text-muted-foreground mt-2">Nenhum time encontrado.</p>
+            )}
+          </div>
+
+          {/* Lista de ligas */}
           <div className="space-y-1">
             {leagues.map((league) => (
               <button
