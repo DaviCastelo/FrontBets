@@ -1,7 +1,6 @@
-
-import { createContext, useContext, useState, useEffect } from "react";
 import { ThemeProvider as NextThemesProvider } from "next-themes";
 import type { ThemeProviderProps } from "next-themes/dist/types";
+import { createContext, useContext, useEffect, useState } from "react";
 
 interface ThemeContextProps {
   theme: string;
@@ -10,21 +9,21 @@ interface ThemeContextProps {
 
 const ThemeContext = createContext<ThemeContextProps | undefined>(undefined);
 
-export function ThemeProvider({ 
+export function ThemeProvider({
   children,
   defaultTheme = "light",
   storageKey = "vite-ui-theme",
-  ...props 
+  ...props
 }: ThemeProviderProps) {
   const [theme, setTheme] = useState(() => {
-    if (typeof window !== 'undefined') {
+    if (typeof window !== "undefined") {
       return localStorage.getItem(storageKey) || defaultTheme;
     }
     return defaultTheme;
   });
 
   useEffect(() => {
-    if (typeof window !== 'undefined') {
+    if (typeof window !== "undefined") {
       const root = window.document.documentElement;
       root.classList.remove("light", "dark");
       root.classList.add(theme);

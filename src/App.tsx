@@ -1,17 +1,20 @@
-import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
+import { Toaster } from "@/components/ui/toaster";
 import { TooltipProvider } from "@/components/ui/tooltip";
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
-import { ThemeProvider } from "@/contexts/ThemeContext";
 import { AuthProvider, useAuth } from "@/contexts/AuthContext";
-import Index from "./pages/Index";
-import Login from "./pages/Login";
-import Register from "./pages/Register";
-import NotFound from "./pages/NotFound";
-import TeamDetails from "./pages/TeamDetails";
-import PrivateRoute from "./components/PrivateRoute";
+import { ThemeProvider } from "@/contexts/ThemeContext";
 import CircularProgress from "@mui/material/CircularProgress";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
+import PrivateRoute from "./components/PrivateRoute";
+import Index from "./pages";
+import { DetailsReferee } from "./pages/DetailsReferee";
+import Login from "./pages/login";
+import NotFound from "./pages/NotFound";
+import { PlayerIndividual } from "./pages/PlayerIndividual";
+import Register from "./pages/Register";
+import TeamDetails from "./pages/TeamDetails";
+import { DetailsMatch } from "./pages/MatchsDetails";
 
 const queryClient = new QueryClient();
 
@@ -49,6 +52,31 @@ const AppRoutes = () => {
         element={
           <PrivateRoute>
             <TeamDetails />
+          </PrivateRoute>
+        }
+      />
+      <Route
+        path="/player/:id"
+        element={
+          <PrivateRoute>
+            <PlayerIndividual />
+          </PrivateRoute>
+        }
+      />
+      <Route
+        path="/matchs-datails/:id"
+        element={
+          <PrivateRoute>
+            <DetailsMatch />
+          </PrivateRoute>
+        }
+      />
+
+      <Route
+        path="/referee/:id"
+        element={
+          <PrivateRoute>
+            <DetailsReferee />
           </PrivateRoute>
         }
       />

@@ -1,10 +1,9 @@
-
 import { ILiga } from "@/common/interfaces/liga";
-import { useTheme } from "@/contexts/ThemeContext";
 import { Button } from "@/components/ui/button";
-import { Moon, Sun, RotateCw } from "lucide-react";
-import { scrapeFlashscore } from "@/services/api";
+import { useTheme } from "@/contexts/ThemeContext";
 import { useToast } from "@/hooks/use-toast";
+import { scrapeFlashscore } from "@/services/api";
+import { Moon, RotateCw, Sun } from "lucide-react";
 import { useState } from "react";
 
 interface LeagueHeaderProps {
@@ -41,9 +40,11 @@ export const LeagueHeader = ({ selectedLeague }: LeagueHeaderProps) => {
       {selectedLeague ? (
         <div>
           <h1 className="text-2xl font-bold text-foreground">
-            {selectedLeague.nome}
+            {selectedLeague.name}
           </h1>
-          <p className="text-sm text-muted-foreground">{selectedLeague.pais}</p>
+          <p className="text-sm text-muted-foreground">
+            {/* {selectedLeague.s} */}
+          </p>
         </div>
       ) : (
         <div></div>
@@ -55,7 +56,7 @@ export const LeagueHeader = ({ selectedLeague }: LeagueHeaderProps) => {
           disabled={isUpdating}
           className="gap-2"
         >
-          <RotateCw className={`h-4 w-4 ${isUpdating ? 'animate-spin' : ''}`} />
+          <RotateCw className={`h-4 w-4 ${isUpdating ? "animate-spin" : ""}`} />
           Atualizar informações
         </Button>
         <Button

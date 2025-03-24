@@ -1,8 +1,7 @@
-
 import axios from "axios";
 
 const api = axios.create({
-  baseURL: "https://bet-api-2.vercel.app/api/api",
+  baseURL: "http://localhost:3000/api/",
   headers: {
     "Content-Type": "application/json",
   },
@@ -17,37 +16,118 @@ api.interceptors.request.use((config) => {
 });
 
 export const fetchLeagues = async () => {
-  const response = await api.get("/ligas");
+  const response = await api.get("/leagues");
   return response.data;
 };
 
-export const fetchTeamsByLeague = async (league: string) => {
-  const response = await api.get(`/times?liga=${league}`);
+export const fetchTeamsByLeague = async (seasonId: number) => {
+  const response = await api.get(`/league-teams`, {
+    params: { season_id: seasonId },
+  });
   return response.data;
 };
 
-export const fetchTeamDetails = async (id: string) => {
-  const response = await api.get(`/times/${id}`);
+export const fetchTeamDetails = async (teamId: string) => {
+  const response = await api.get(`/individual-team`, {
+    params: { team_id: teamId },
+  });
   return response.data;
 };
 
-export const fetchTeamMatches = async (teamId: string, tipo: string) => {
-  const response = await api.get(`/partidas/time?idTime=${teamId}&tipo=${tipo}`);
-  return response.data.partidas;
+export const fetchPlayerDetails = async (playerId: string) => {
+  const response = await api.get(`/player`, {
+    params: { player_id: playerId },
+  });
+  return response.data;
 };
 
-export const fetchStandings = async (leagueId: string) => {
-  const response = await api.get(`/classificacoes/${leagueId}`);
+export const fetchRefereeDetails = async (refereeId: string) => {
+  const response = await api.get(`/referee`, {
+    params: { referee_id: refereeId },
+  });
+  return response.data;
+};
+
+export const fetchMatchDetails = async (matchId: string) => {
+  const response = await api.get(`/match-details`, {
+    params: { match_id: matchId },
+  });
+  return response.data;
+};
+
+export const fetchTodayMatches = async () => {
+  const response = await api.get(`/today-matches`);
+  return response.data;
+};
+
+export const fetchStandings = async (seasonId: number) => {
+  const response = await api.get(`/league-table`, {
+    params: { season_id: seasonId },
+  });
+  return response.data;
+};
+
+export const fetchCountry = async () => {
+  const response = await api.get(`/country`);
+  return response.data;
+};
+
+export const fetchOdd = async () => {
+  const response = await api.get(`/odds`);
+  return response.data;
+};
+
+export const fetchBtts = async () => {
+  const response = await api.get(`/btts`);
+  return response.data;
+};
+
+export const fetchLeagueSeason = async (seasonId: number) => {
+  const response = await api.get(`/league-season`, {
+    params: { season_id: seasonId },
+  });
+  return response.data;
+};
+
+export const fetchPlayersLeague = async (seasonId: number) => {
+  const response = await api.get(`/league-players`, {
+    params: { season_id: seasonId },
+  });
+  return response.data;
+};
+
+export const fetchRefereesLeague = async (seasonId: number) => {
+  const response = await api.get(`/league-referees`, {
+    params: { season_id: seasonId },
+  });
+  return response.data;
+};
+
+export const fetchMatchesLeague = async (seasonId: number) => {
+  const response = await api.get(`/league-matches`, {
+    params: { season_id: seasonId },
+  });
+  return response.data;
+};
+
+export const fetchStateOfLeague = async (seasonId: number) => {
+  const response = await api.get(`/league-season`, {
+    params: { season_id: seasonId },
+  });
   return response.data;
 };
 
 export const fetchFixtures = async (leagueId: string, tipo: string) => {
-  const response = await api.get(`/partidas??id_campeonato=${leagueId}&tipo=${tipo}`);
+  const response = await api.get(
+    `/partidas??id_campeonato=${leagueId}&tipo=${tipo}`
+  );
   return response.data;
 };
 
 export const fetchResults = async (leagueId: string, tipo: string) => {
-  const response = await api.get(`/partidas??id_campeonato=${leagueId}&tipo=${tipo}`);
+  const response = await api.get(
+    `/partidas??id_campeonato=${leagueId}&tipo=${tipo}`
+  );
   return response.data;
 };
 
@@ -56,7 +136,10 @@ export const scrapeFlashscore = async () => {
   return response.data;
 };
 
-export const login = async (credentials: { email: string; password: string }) => {
+export const login = async (credentials: {
+  email: string;
+  password: string;
+}) => {
   const response = await api.post("/login", credentials);
   return response.data;
 };

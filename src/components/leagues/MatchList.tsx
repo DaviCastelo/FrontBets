@@ -37,22 +37,28 @@ export const MatchList = ({ matches }: MatchListProps) => {
           <div className="flex justify-between items-center">
             <div className="flex items-center gap-3">
               <img
-                src={match.time_mandante.escudo}
-                alt={match.time_mandante.nome}
+                src={match.time_mandante.image}
+                alt={match.time_mandante.name}
                 className="w-8 h-8 object-contain"
               />
               <span className="font-medium text-card-foreground">
-                {match.time_mandante.nome}
+                {match.time_mandante.name}
               </span>
               <span className="text-2xl font-bold text-card-foreground">
-                {match.placar_mandante.toString() == "-" ? "" : match.placar_mandante} - {match.placar_visitante.toString() == "-" ? "" : match.placar_visitante}
+                {match.placar_mandante.toString() == "-"
+                  ? ""
+                  : match.placar_mandante}{" "}
+                -{" "}
+                {match.placar_visitante.toString() == "-"
+                  ? ""
+                  : match.placar_visitante}
               </span>
               <span className="font-medium text-card-foreground">
-                {match.time_visitante.nome}
+                {match.time_visitante.name}
               </span>
               <img
-                src={match.time_visitante.escudo}
-                alt={match.time_visitante.nome}
+                src={match.time_visitante.image}
+                alt={match.time_visitante.name}
                 className="w-8 h-8 object-contain"
               />
             </div>

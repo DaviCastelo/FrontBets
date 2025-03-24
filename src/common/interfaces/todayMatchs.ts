@@ -1,0 +1,26 @@
+export type TodayMatch = {
+  id: number;
+  homeID: number;
+  awayID: number;
+  season: string;
+  status: string;
+  roundID: number;
+  game_week: number;
+  revised_game_week: number;
+  homeGoals: number[];
+  awayGoals: number[];
+  homeGoalCount: number;
+  awayGoalCount: number;
+  totalGoalCount: number;
+  stadium_name: string;
+  stadium_location: string;
+  odds_ft_1: number;
+  odds_ft_x: number;
+  odds_ft_2: number;
+  home_name: string;
+  away_name: string;
+  home_image: string;
+  away_image: string;
+  match_url: string;
+  date_unix: number;
+};

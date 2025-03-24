@@ -1,7 +1,13 @@
-import { createContext, useContext, useState, useEffect, ReactNode } from "react";
-import { useNavigate } from "react-router-dom";
-import api from "@/services/api";
 import { useToast } from "@/components/ui/use-toast";
+import api from "@/services/api";
+import {
+  createContext,
+  ReactNode,
+  useContext,
+  useEffect,
+  useState,
+} from "react";
+import { useNavigate } from "react-router-dom";
 
 interface User {
   id: number;
@@ -12,7 +18,13 @@ interface User {
 interface AuthContextType {
   user: User | null;
   login: (email: string, password: string) => Promise<void>;
-  register: (name: string, email: string, password: string, cargo: string, password_confirmation: string) => Promise<void>;
+  register: (
+    name: string,
+    email: string,
+    password: string,
+    cargo: string,
+    password_confirmation: string
+  ) => Promise<void>;
   logout: () => void;
   isAuthenticated: boolean;
   loading: boolean;
@@ -41,7 +53,9 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     try {
       const response = await api.post("/login", { email, password });
       localStorage.setItem("token", response.data.token);
-      api.defaults.headers.common["Authorization"] = `Bearer ${response.data.token}`;
+      api.defaults.headers.common[
+        "Authorization"
+      ] = `Bearer ${response.data.token}`;
       setUser(response.data.user);
       toast({
         title: "Login realizado com sucesso!",
@@ -58,11 +72,25 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     }
   };
 
-  const register = async (name: string, email: string, password: string, cargo: string, password_confirmation: string) => {
+  const register = async (
+    name: string,
+    email: string,
+    password: string,
+    cargo: string,
+    password_confirmation: string
+  ) => {
     try {
-      const response = await api.post("/register", { name, email, password, cargo, password_confirmation });
+      const response = await api.post("/register", {
+        name,
+        email,
+        password,
+        cargo,
+        password_confirmation,
+      });
       localStorage.setItem("token", response.data.token);
-      api.defaults.headers.common["Authorization"] = `Bearer ${response.data.token}`;
+      api.defaults.headers.common[
+        "Authorization"
+      ] = `Bearer ${response.data.token}`;
       setUser(response.data.user);
       toast({
         title: "Cadastro realizado com sucesso!",
@@ -87,7 +115,16 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   };
 
   return (
-    <AuthContext.Provider value={{ user, login, logout, register, isAuthenticated: !!user, loading }}>
+    <AuthContext.Provider
+      value={{
+        user,
+        login,
+        logout,
+        register,
+        isAuthenticated: !!user,
+        loading,
+      }}
+    >
       {children}
     </AuthContext.Provider>
   );

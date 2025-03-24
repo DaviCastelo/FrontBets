@@ -1,62 +1,140 @@
-import { useState } from "react";
-import { LeagueSidebar } from "@/components/LeagueSidebar";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { useQuery } from "@tanstack/react-query";
-import {
-  fetchStandings,
-  fetchTeamsByLeague,
-  fetchFixtures,
-  fetchResults,
-} from "@/services/api";
-import { CalendarDays, Trophy, Users } from "lucide-react";
 import { ILiga } from "@/common/interfaces/liga";
+import { EmptyLeagueState } from "@/components/leagues/EmptyLeagueState";
+import { LeagueHeader } from "@/components/leagues/LeagueHeader";
 import { StandingsTable } from "@/components/leagues/StandingsTable";
 import { TeamsList } from "@/components/leagues/TeamsList";
-import { MatchList } from "@/components/leagues/MatchList";
-import { LeagueHeader } from "@/components/leagues/LeagueHeader";
-import { EmptyLeagueState } from "@/components/leagues/EmptyLeagueState";
+import { LeagueSidebar } from "@/components/LeagueSidebar";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import {
+  fetchBtts,
+  fetchMatchesLeague,
+  fetchOdd,
+  fetchPlayersLeague,
+  fetchRefereesLeague,
+  fetchStandings,
+  fetchStateOfLeague,
+  fetchTeamsByLeague,
+  fetchTodayMatches,
+} from "@/services/api";
 import CircularProgress from "@mui/material/CircularProgress";
+import { useQuery } from "@tanstack/react-query";
+import { CalendarDays, Trophy, Users } from "lucide-react";
+import { useState } from "react";
+import { ListPlayers } from "./ListPlayers";
+import { ListRefeers } from "./ListReferees";
+import { Match } from "./Match";
+import { StateLeague } from "./StateOfLeague";
+import { TodayMatchs } from "./TodayPages";
+import { ListOdds } from "./ListOdds";
+import { ListBtts } from "./ListBtts";
 
 const Index = () => {
   const [selectedLeague, setSelectedLeague] = useState<ILiga | undefined>();
 
-  const { data: standings, isFetching: isFetchingStandings } = useQuery({
-    queryKey: ["standings", selectedLeague?.id],
-    queryFn: () =>
-      selectedLeague ? fetchStandings(selectedLeague.id.toString()) : null,
-    enabled: !!selectedLeague,
+  const { data: queryStandings, isFetching: isFetchingStandings } = useQuery({
+    queryKey: ["standings", selectedLeague?.season],
+    queryFn: () => {
+      const seasonId = localStorage.getItem("selectedSeasonId");
+      return seasonId ? fetchStandings(Number(seasonId)) : null;
+    },
+    enabled: !!selectedLeague || !!localStorage.getItem("selectedSeasonId"),
   });
 
-  const { data: results, isFetching: isFetchingResults } = useQuery({
-    queryKey: ["results", selectedLeague?.id],
-    queryFn: () =>
-      selectedLeague
-        ? fetchResults(selectedLeague.id.toString(), "results")
-        : null,
-    enabled: !!selectedLeague,
+  const { data: querytodayMatches, isFetching: isTodayMatches } = useQuery({
+    queryKey: ["todayMatches"],
+    queryFn: fetchTodayMatches,
   });
 
-  const { data: teams, isFetching: isFetchingTeams } = useQuery({
-    queryKey: ["teams", selectedLeague?.id],
-    queryFn: () =>
-      selectedLeague ? fetchTeamsByLeague(selectedLeague.nome) : null,
-    enabled: !!selectedLeague,
+  const { data: isTeam, isFetching: isFetchingTeams } = useQuery({
+    queryKey: ["teams", selectedLeague?.season],
+    queryFn: () => {
+      const seasonId = localStorage.getItem("selectedSeasonId");
+      return seasonId ? fetchTeamsByLeague(Number(seasonId)) : null;
+    },
+    enabled: !!selectedLeague || !!localStorage.getItem("selectedSeasonId"),
   });
 
-  const { data: fixtures, isFetching: isFetchingFixtures } = useQuery({
-    queryKey: ["fixtures", selectedLeague?.id],
-    queryFn: () =>
-      selectedLeague
-        ? fetchFixtures(selectedLeague.id.toString(), "fixtures")
-        : null,
-    enabled: !!selectedLeague,
+  const { data: isRefereeLeague, isFetching: isFetchingReferreLeague } =
+    useQuery({
+      queryKey: ["leagueReferee", selectedLeague?.season],
+      queryFn: () => {
+        const seasonId = localStorage.getItem("selectedSeasonId");
+        return seasonId ? fetchRefereesLeague(Number(seasonId)) : null;
+      },
+      enabled: !!selectedLeague || !!localStorage.getItem("selectedSeasonId"),
+    });
+
+  const { data: isPlayers, isFetching: isFetchingPlays } = useQuery({
+    queryKey: ["leaguePlayer", selectedLeague?.season],
+    queryFn: () => {
+      const seasonId = localStorage.getItem("selectedSeasonId");
+      return seasonId ? fetchPlayersLeague(Number(seasonId)) : null;
+    },
+    enabled: !!selectedLeague || !!localStorage.getItem("selectedSeasonId"),
+  });
+
+  const { data: isMatchesLeague, isFetching: isFetchingMatchesLeague } =
+    useQuery({
+      queryKey: ["matchesLeague", selectedLeague?.season],
+      queryFn: () => {
+        const seasonId = localStorage.getItem("selectedSeasonId");
+        return seasonId ? fetchMatchesLeague(Number(seasonId)) : null;
+      },
+      enabled: !!selectedLeague || !!localStorage.getItem("selectedSeasonId"),
+    });
+
+  const { data: isStateOfLeague, isFetching: isFetchingStateOfLeague } =
+    useQuery({
+      queryKey: ["statesOfLeague", selectedLeague?.season],
+      queryFn: () => {
+        const seasonId = localStorage.getItem("selectedSeasonId");
+        return seasonId ? fetchStateOfLeague(Number(seasonId)) : null;
+      },
+      enabled: !!selectedLeague || !!localStorage.getItem("selectedSeasonId"),
+    });
+
+  const { data: queryOdds, isFetching: isOdds } = useQuery({
+    queryKey: ["odds"],
+    queryFn: fetchOdd,
+  });
+
+  const { data: queryBtts, isFetching: isbtts } = useQuery({
+    queryKey: ["btts"],
+    queryFn: fetchBtts,
   });
 
   const loading =
+    isFetchingPlays ||
     isFetchingStandings ||
-    isFetchingResults ||
     isFetchingTeams ||
-    isFetchingFixtures;
+    isTodayMatches ||
+    isFetchingStateOfLeague ||
+    isFetchingMatchesLeague ||
+    isFetchingReferreLeague ||
+    isOdds ||
+    isbtts;
+
+  const teams = isTeam?.data ?? [];
+
+  const standings = queryStandings?.data?.all_matches_table_home ?? [];
+
+  const leaguePlayer = isPlayers?.data ?? [];
+
+  const matchesLeague = isMatchesLeague?.data ?? [];
+
+  const todayMatches = querytodayMatches?.data ?? [];
+
+  const statesOfLeague = isStateOfLeague?.data ?? [];
+
+  const leagueReferee = isRefereeLeague?.data ?? [];
+
+  const oddsTeams = queryOdds?.data?.top_teams?.data ?? [];
+  const oddsFixtures = queryOdds?.data?.top_fixtures?.data ?? [];
+  const oddsLeagues = queryOdds?.data?.top_leagues?.data ?? [];
+
+  const bttsTeams = queryBtts?.data?.top_teams?.data ?? [];
+  const bttsFixtures = queryBtts?.data?.top_fixtures?.data ?? [];
+  const bttsLeagues = queryBtts?.data?.top_leagues?.data ?? [];
 
   return (
     <div className="flex min-h-screen bg-background">
@@ -81,14 +159,61 @@ const Index = () => {
                 <Users className="w-4 h-4" />
                 Times
               </TabsTrigger>
+              <TabsTrigger
+                value="leaguePlayer"
+                className="flex items-center gap-2"
+              >
+                <CalendarDays className="w-4 h-4" />
+                Jogadores da Liga
+              </TabsTrigger>
+              <TabsTrigger
+                value="leagueReferee"
+                className="flex items-center gap-2"
+              >
+                <CalendarDays className="w-4 h-4" />
+                Arbitros da Liga
+              </TabsTrigger>
+              <TabsTrigger
+                value="todayMatches"
+                className="flex items-center gap-2"
+              >
+                <CalendarDays className="w-4 h-4" />
+                Jogos de Hoje
+              </TabsTrigger>
+              <TabsTrigger
+                value="matchesLeague"
+                className="flex items-center gap-2"
+              >
+                <CalendarDays className="w-4 h-4" />
+                Resultados
+              </TabsTrigger>
+
+              <TabsTrigger
+                value="statesOfLeague"
+                className="flex items-center gap-2"
+              >
+                <CalendarDays className="w-4 h-4" />
+                States da Liga
+              </TabsTrigger>
+
               <TabsTrigger value="fixtures" className="flex items-center gap-2">
                 <CalendarDays className="w-4 h-4" />
                 Próximos Jogos
               </TabsTrigger>
-              <TabsTrigger value="results" className="flex items-center gap-2">
+
+              <TabsTrigger value="odds" className="flex items-center gap-2">
+                <CalendarDays className="w-4 h-4" />
+                Over 2.5 Stats
+              </TabsTrigger>
+
+              <TabsTrigger value="btts" className="flex items-center gap-2">
+                <CalendarDays className="w-4 h-4" />
+                BTTS Stats
+              </TabsTrigger>
+              {/* <TabsTrigger value="results" className="flex items-center gap-2">
                 <CalendarDays className="w-4 h-4" />
                 Resultados
-              </TabsTrigger>
+              </TabsTrigger> */}
             </TabsList>
 
             {loading ? (
@@ -98,20 +223,60 @@ const Index = () => {
             ) : (
               <>
                 <TabsContent value="standings" className="animate-fadeIn">
-                  {standings && <StandingsTable standings={standings} />}
+                  {<StandingsTable standings={standings} />}
                 </TabsContent>
 
                 <TabsContent value="teams" className="animate-fadeIn">
-                  {teams && <TeamsList teams={teams} />}
+                  {<TeamsList teams={teams} />}
                 </TabsContent>
 
-                <TabsContent value="fixtures" className="animate-fadeIn">
+                <TabsContent value="leaguePlayer" className="animate-fadeIn">
+                  {<ListPlayers players={leaguePlayer}></ListPlayers>}
+                </TabsContent>
+
+                <TabsContent value="matchesLeague" className="animate-fadeIn">
+                  {<Match matchs={matchesLeague}></Match>}
+                </TabsContent>
+
+                <TabsContent value="todayMatches" className="animate-fadeIn">
+                  {<TodayMatchs todayMatches={todayMatches}></TodayMatchs>}
+                </TabsContent>
+
+                <TabsContent value="statesOfLeague" className="animate-fadeIn">
+                  {<StateLeague statesOfLeague={statesOfLeague}></StateLeague>}
+                </TabsContent>
+
+                <TabsContent value="leagueReferee" className="animate-fadeIn">
+                  {<ListRefeers referees={leagueReferee}></ListRefeers>}
+                </TabsContent>
+
+                <TabsContent value="odds" className="animate-fadeIn">
+                  {
+                    <ListOdds
+                      oddsTeams={oddsTeams}
+                      oddsFixtures={oddsFixtures}
+                      oddsLeagues={oddsLeagues}
+                    />
+                  }
+                </TabsContent>
+
+                <TabsContent value="btts" className="animate-fadeIn">
+                  {
+                    <ListBtts
+                      bttsTeams={bttsTeams}
+                      bttsFixtures={bttsFixtures}
+                      bttsLeagues={bttsLeagues}
+                    ></ListBtts>
+                  }
+                </TabsContent>
+
+                {/* <TabsContent value="fixtures" className="animate-fadeIn">
                   {fixtures && <MatchList matches={fixtures} />}
-                </TabsContent>
+                </TabsContent> */}
 
-                <TabsContent value="results" className="animate-fadeIn">
+                {/* <TabsContent value="results" className="animate-fadeIn">
                   {results && <MatchList matches={results} />}
-                </TabsContent>
+                </TabsContent> */}
               </>
             )}
           </Tabs>

@@ -1,4 +1,3 @@
-
 import { IStanding } from "@/common/interfaces/standing";
 import {
   Table,
@@ -29,22 +28,18 @@ export const StandingsTable = ({ standings }: StandingsTableProps) => {
           </TableRow>
         </TableHeader>
         <TableBody>
-          {standings?.map((standing: IStanding, index: number) => (
+          {standings?.map((standing, index) => (
             <TableRow key={standing.id}>
               <TableCell>{index + 1}</TableCell>
               <TableCell className="font-medium flex flex-row gap-2">
-                <img
-                  src={standing.time.escudo}
-                  alt={standing.time.nome}
-                  className="w-6 h-6 object-contain"
-                />
-                {standing.time.nome}
+                {/* Nome do time */}
+                {standing.name || "Desconhecido"}
               </TableCell>
-              <TableCell>{standing.jogos}</TableCell>
-              <TableCell>{standing.vitorias}</TableCell>
-              <TableCell>{standing.empates}</TableCell>
-              <TableCell>{standing.derrotas}</TableCell>
-              <TableCell className="font-bold">{standing.pontos}</TableCell>
+              <TableCell>{standing.matchesPlayed}</TableCell>
+              <TableCell>{standing.seasonWins_overall}</TableCell>
+              <TableCell>{standing.seasonDraws_overall}</TableCell>
+              <TableCell>{standing.seasonLosses_overall}</TableCell>
+              <TableCell className="font-bold">{standing.points}</TableCell>
             </TableRow>
           ))}
         </TableBody>

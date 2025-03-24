@@ -1,49 +1,35 @@
-
-import { useParams, useNavigate } from "react-router-dom";
-import { useQuery } from "@tanstack/react-query";
-import { fetchTeamDetails, fetchTeamMatches } from "@/services/api";
+import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { fetchTeamDetails } from "@/services/api";
+import { useQuery } from "@tanstack/react-query";
 import {
-  Users,
-  Trophy,
-  CalendarDays,
   ArrowLeft,
+  CalendarDays,
   MapPin,
+  Trophy,
   User,
+  Users,
 } from "lucide-react";
-import CircularProgress from "@mui/material/CircularProgress";
-import { format } from "date-fns";
-import { ptBR } from "date-fns/locale";
-import { Button } from "@/components/ui/button";
+import { useNavigate, useParams } from "react-router-dom";
 
 const TeamDetails = () => {
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
 
-  const { data: team, isLoading: isLoadingTeam } = useQuery({
+  const { data: teamData, isFetching: isFetchingTeam } = useQuery({
     queryKey: ["team", id],
-    queryFn: () => fetchTeamDetails(id!),
-    enabled: !!id,
-  });
-
-  const { data: matches, isLoading: isLoadingMatches } = useQuery({
-    queryKey: ["team-matches", id],
-    queryFn: () => fetchTeamMatches(id!, "fixtures"),
+    queryFn: () => fetchTeamDetails(id),
     enabled: !!id,
   });
 
   const handleBack = () => {
-    navigate(-1); // Isso fará o navegador voltar para a página anterior mantendo o estado
+    navigate(-1);
   };
 
-  if (isLoadingTeam || isLoadingMatches) {
-    return (
-      <div className="flex justify-center items-center h-screen">
-        <CircularProgress />
-      </div>
-    );
-  }
+  if (isFetchingTeam) return <p>Carregando...</p>;
+  if (!teamData) return <p>Nenhum dado encontrado</p>;
+  const team = teamData.data[0];
 
   return (
     <div className="container mx-auto p-6">
@@ -58,13 +44,13 @@ const TeamDetails = () => {
 
       <div className="mb-8 flex items-center gap-4">
         <img
-          src={team?.escudo}
-          alt={team?.nome}
+          src={team?.image}
+          alt={team?.name}
           className="w-32 h-32 object-contain rounded-lg shadow-lg"
         />
         <div>
-          <h1 className="text-4xl font-bold text-foreground">{team?.nome}</h1>
-          <p className="text-xl text-muted-foreground">{team?.liga}</p>
+          <h1 className="text-4xl font-bold text-foreground">{team?.name}</h1>
+          <p className="text-xl text-muted-foreground">{team?.country}</p>
         </div>
       </div>
 
@@ -82,14 +68,14 @@ const TeamDetails = () => {
                 <MapPin className="w-4 h-4 text-muted-foreground" />
                 <p>
                   <span className="font-semibold">Estádio:</span>{" "}
-                  {team?.estadio || "Não informado"}
+                  {team?.season || "Não informado"}
                 </p>
               </div>
               <div className="flex items-center gap-2">
                 <User className="w-4 h-4 text-muted-foreground" />
                 <p>
-                  <span className="font-semibold">Técnico:</span>{" "}
-                  {team?.tecnico || "Não informado"}
+                  <span className="font-semibold">Posição na tabela:</span>{" "}
+                  {team?.table_position || "Não informado"}
                 </p>
               </div>
             </div>
@@ -110,7 +96,7 @@ const TeamDetails = () => {
         </TabsList>
 
         <TabsContent value="players" className="mt-6">
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+          {/* <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
             {team?.jogadores.map((player) => (
               <Card
                 key={player.id}
@@ -133,11 +119,11 @@ const TeamDetails = () => {
                 </CardContent>
               </Card>
             ))}
-          </div>
+          </div> */}
         </TabsContent>
 
         <TabsContent value="matches" className="mt-6">
-          <div className="space-y-4">
+          {/* <div className="space-y-4">
             {Array.isArray(matches) &&
               matches.map((match) => (
                 <Card
@@ -186,7 +172,7 @@ const TeamDetails = () => {
                   </CardContent>
                 </Card>
               ))}
-          </div>
+          </div> */}
         </TabsContent>
       </Tabs>
     </div>
