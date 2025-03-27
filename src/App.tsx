@@ -31,53 +31,53 @@ const AppRoutes = () => {
 
   return (
     <Routes>
-      <Route
+      {/* <Route
         path="/login"
         element={isAuthenticated ? <Navigate to="/" replace /> : <Login />}
-      />
-      <Route
+      /> */}
+      {/* <Route
         path="/register"
         element={isAuthenticated ? <Navigate to="/" replace /> : <Register />}
-      />
+      /> */}
       <Route
         path="/"
         element={
-          <PrivateRoute>
+          
             <Index />
-          </PrivateRoute>
+          
         }
       />
       <Route
         path="/team/:id"
         element={
-          <PrivateRoute>
+          
             <TeamDetails />
-          </PrivateRoute>
+          
         }
       />
       <Route
         path="/player/:id"
         element={
-          <PrivateRoute>
+          
             <PlayerIndividual />
-          </PrivateRoute>
+          
         }
       />
       <Route
         path="/matchs-datails/:id"
         element={
-          <PrivateRoute>
+          
             <DetailsMatch />
-          </PrivateRoute>
+          
         }
       />
 
       <Route
         path="/referee/:id"
         element={
-          <PrivateRoute>
+          
             <DetailsReferee />
-          </PrivateRoute>
+          
         }
       />
       <Route path="*" element={<NotFound />} />
